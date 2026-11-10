@@ -1,0 +1,15 @@
+{
+  "name": "tradepulse-backend",
+  "version": "1.0.0",
+  "description": "Servidor en tiempo real REST + Socket.io para TradePulse (Móvil React + Smartwatch Wear OS)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}

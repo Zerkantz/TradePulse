@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradePulse — Código QR Expo Go + Estado del Servidor</title>
+  <style>
+    :root {
+      --bg: #070a0f;
+      --card: #111722;
+      --border: #243044;
+      --text: #f1f5f9;
+      --muted: #8b9bb4;
+      --bull: #10b981;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 460px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+    }
+    h1 { font-size: 22px; font-weight: 700; }
+    p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .qr-box {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .url-pill {
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bull);
+      background: #192231;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      width: 100%;
+      user-select: all;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      background: var(--bull);
+      color: #070a0f;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>TradePulse · Expo Go QR</h1>
+    <p>Escanea este código QR con la app <strong>Expo Go</strong> (Android) o la cámara (iOS) conectado a tu misma red Wi-Fi.</p>
+    <div class="qr-box">
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=4&data=exp%3A%2F%2F192.168.0.92%3A8081"
+        width="240"
+        height="240"
+        alt="QR exp://192.168.0.92:8081"
+      />
+    </div>
+    <div class="url-pill">exp://192.168.0.92:8081</div>
+    <a class="btn" href="http://localhost:8081" target="_blank">Abrir versión Web de Expo (localhost:8081)</a>
+    <div class="status-row">
+      <span>Backend Socket.io: <strong id="st-back" style="color:var(--amber)">Verificando...</strong></span>
+      <span>IP Local: <strong>192.168.0.92</strong></span>
+    </div>
+  </div>
+  <script>
+    async function check() {
+      const el = document.getElementById('st-back');
+      try {
+        const r = await fetch('http://localhost:4000/api/state');
+        if (r.ok) {
+          el.textContent = 'Activo (:4000)';
+          el.style.color = '#10b981';
+        }
+      } catch (_) {
+        el.textContent = 'Iniciando...';
+      }
+    }
+    check();
+    setInterval(check, 2000);
+  </script>
+</body>
+</html>

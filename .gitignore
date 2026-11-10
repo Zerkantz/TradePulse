@@ -1,0 +1,31 @@
+# Dependencias y enlaces simbólicos
+node_modules/
+mobile/node_modules/
+backend/node_modules/
+
+# Variables de entorno y datos locales sensibles (Alpaca OAuth2 / usuarios)
+.env
+backend/.env
+*.env.local
+backend/data_*.json
+
+# Expo y React Native
+.expo/
+mobile/.expo/
+dist/
+web-build/
+
+# Android Studio / Gradle (Wear OS)
+wear/.gradle/
+wear/build/
+wear/app/build/
+wear/local.properties
+wear/.idea/
+*.iml
+*.apk
+*.aab
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
